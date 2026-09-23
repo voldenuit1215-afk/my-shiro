@@ -45,10 +45,13 @@
         font-family: 'Shippori Mincho', serif;
     }
     
-    /* モーダルが画面内からはみ出るのを防ぐ設定 */
-    .modal-body-scroll {
-        max-height: calc(85dvh - 120px);
-        overflow-y: auto;
+    /* スマホ画面見切れ完全防止設定 */
+    .mobile-fullscreen-modal {
+        width: 100vw !important;
+        height: 100dvh !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
     }
     
     /* カスタムスクロールバー */
@@ -882,30 +885,29 @@
             const is100 = castle.category === "100名城";
 
             return (
-                <div className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-xs flex items-center justify-center p-2">
-        <div className="bg-[#f7f5f0] w-full max-w-[360px] rounded-xl shadow-2xl border-2 border-[#c5a059] overflow-hidden flex flex-col max-h-[85dvh]">
-                        
-                        {/* Modal Header */}
-                        <div className="bg-[#1b2a47] text-white p-4 flex items-start justify-between border-b-2 border-[#c5a059]">
-                            <div>
-                                <div className="flex items-center space-x-2">
-                                    <span className={`text-xs px-2 py-0.5 rounded font-bold ${is100 ? 'bg-[#d3381c]' : 'bg-[#5b6b8c]'}`}>
-                                        No.{castle.id} {castle.category}
-                                    </span>
-                                    <span className="text-xs text-[#c5a059]">{castle.pref} ({castle.region})</span>
-                                </div>
-                                <h2 className="font-mincho font-bold text-2xl mt-1 text-[#f7f5f0]">{castle.name}</h2>
-                            </div>
-                            <button 
-                                onClick={onClose}
-                                className="text-gray-300 hover:text-white text-xl font-bold p-1 leading-none"
-                            >
-                                ✕
-                            </button>
+                <div className="fixed inset-0 z-[5000] bg-[#f7f5f0] flex flex-col w-full h-full overflow-hidden">
+                    {/* 上部固定ヘッダー（保存ボタンをここに配置） */}
+                    <div className="bg-[#1b2a47] text-white p-3 flex items-center justify-between border-b-2 border-[#c5a059] shrink-0">
+                        <button type="button" onClick={onClose} className="text-gray-300 hover:text-white text-sm font-bold bg-gray-700 px-3 py-1 rounded">
+                            ✕ 閉じる
+                        </button>
+                        <div className="text-center">
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${is100 ? 'bg-[#d3381c]' : 'bg-[#5b6b8c]'}`}>
+                                No.{castle.id} {castle.category}
+                            </span>
+                            <h2 className="font-mincho font-bold text-base text-[#f7f5f0]">{castle.name}</h2>
                         </div>
+                        <button type="submit" onClick={handleSubmit} disabled={isSaving} className="bg-[#d3381c] hover:bg-[#b02a12] text-white text-xs px-3 py-1.5 rounded font-bold shadow">
+                            {isSaving ? "保存中" : "保存"}
+                        </button>
+                    </div>
 
-                        {/* Modal Body */}
-                        <form onSubmit={handleSubmit} className="p-4 modal-body-scroll space-y-3 text-xs">
+                    {/* スクロール入力エリア */}
+                    <form onSubmit={handleSubmit} className="p-4 overflow-y-auto space-y-4 text-xs flex-1 pb-32 max-w-md mx-auto w-full">
+                            
+                            
+                            
+                            
                             
                             {/* Visit Toggle Checkbox */}
                             <div className="bg-white p-3 rounded-lg border border-gray-200 flex items-center justify-between">
