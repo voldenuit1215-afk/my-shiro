@@ -21,69 +21,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --shuri: #d3381c;
-            --navy: #1b2a47;
-            --gold: #c5a059;
-            --washi: #f7f5f0;
-            --dark-washi: #ebe7df;
-        }
-        body {
-            font-family: 'Zen Kaku Gothic New', sans-serif;
-            background-color: var(--washi);
-            color: #2b2b2b;
-            height: 100dvh;
-            margin: 0;
-        }
-        .animate-fade-in {
-            max-width: 92vw !important;
-            max-height: 85dvh !important;
-        }
-        .font-mincho {
-            font-family: 'Shippori Mincho', serif;
-        }
-        /* Custom scrollbar for panel */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c5a059;
-            border-radius: 3px;
-        }
-        /* Custom Leaflet Map Pin badges */
-        .leaflet-div-icon {
-            background: transparent;
-            border: none;
-        }
-        .castle-marker {
-            transition: transform 0.2s ease, filter 0.2s ease;
-        }
-        .castle-marker:hover {
-            transform: scale(1.2);
-            z-index: 1000 !important;
-        }
-        .custom-popup .leaflet-popup-content-wrapper {
-            background: #fdfbf7;
-            border-radius: 8px;
-            padding: 0;
-            overflow: hidden;
-            border: 1px solid #c5a059;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-        }
-        .custom-popup .leaflet-popup-content {
-            margin: 0;
-            width: 300px !important;
-        }
-        .custom-popup .leaflet-popup-tip {
-            background: #fdfbf7;
-            border: 1px solid #c5a059;
-        }
-    </style>
+<style>
+    :root {
+        --shuri: #d3381c;
+        --navy: #1b2a47;
+        --gold: #c5a059;
+        --washi: #f7f5f0;
+        --dark-washi: #ebe7df;
+    }
+    html, body {
+        height: 100%;
+        height: 100dvh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* 全体スクロールを防止 */
+    }
+    body {
+        font-family: 'Zen Kaku Gothic New', sans-serif;
+        background-color: var(--washi);
+        color: #2b2b2b;
+    }
+    .font-mincho {
+        font-family: 'Shippori Mincho', serif;
+    }
+    
+    /* モーダルが画面内からはみ出るのを防ぐ設定 */
+    .modal-body-scroll {
+        max-height: calc(85dvh - 120px);
+        overflow-y: auto;
+    }
+    
+    /* カスタムスクロールバー */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
+    
+    .leaflet-div-icon { background: transparent; border: none; }
+    .castle-marker { transition: transform 0.2s ease, filter 0.2s ease; }
+    .castle-marker:hover { transform: scale(1.2); z-index: 1000 !important; }
+</style>
 </head>
 <body class="h-screen w-screen overflow-hidden flex flex-col md:flex-row">
     <div id="root" class="w-full h-full flex flex-col md:flex-row"></div>
@@ -211,7 +187,7 @@
             { id: 99, name: "中城城", category: "100名城", region: "九州・沖縄", pref: "沖縄県", lat: 26.2842, lng: 127.8014 },
             { id: 100, name: "首里城", category: "100名城", region: "九州・沖縄", pref: "沖縄県", lat: 26.2169, lng: 127.7194 },
 
-            // === 続日本100名城 (101-200) ===
+// === 続日本100名城 (101-200) ===
             // 北海道・東北
             { id: 101, name: "志苔館", category: "続100名城", region: "北海道・東北", pref: "北海道", lat: 41.7681, lng: 140.8117 },
             { id: 102, name: "上ノ国勝山館", category: "続100名城", region: "北海道・東北", pref: "北海道", lat: 41.7994, lng: 140.1239 },
@@ -241,7 +217,7 @@
             { id: 124, name: "品川台場", category: "続100名城", region: "関東・甲信越", pref: "東京都", lat: 35.6317, lng: 139.7711 },
             { id: 125, name: "小机城", category: "続100名城", region: "関東・甲信越", pref: "神奈川県", lat: 35.5089, lng: 139.5939 },
             { id: 126, name: "石垣山城", category: "続100名城", region: "関東・甲信越", pref: "神奈川県", lat: 35.2358, lng: 139.1350 },
-            { id: 127, name: "新発田城 (続重複除外/新府城)", category: "続100名城", region: "関東・甲信越", pref: "山梨県", lat: 35.7483, lng: 138.3703 },
+            { id: 127, name: "新府城", category: "続100名城", region: "関東・甲信越", pref: "山梨県", lat: 35.7483, lng: 138.3703 },
             { id: 128, name: "要害山城", category: "続100名城", region: "関東・甲信越", pref: "山梨県", lat: 35.6961, lng: 138.6014 },
             { id: 129, name: "龍岡城", category: "続100名城", region: "関東・甲信越", pref: "長野県", lat: 36.1953, lng: 138.5000 },
             { id: 130, name: "高島城", category: "続100名城", region: "関東・甲信越", pref: "長野県", lat: 36.0397, lng: 138.1136 },
@@ -288,41 +264,42 @@
             { id: 167, name: "新宮城", category: "続100名城", region: "近畿", pref: "和歌山県", lat: 33.7275, lng: 135.9961 },
 
             // 中国・四国
+// 中国・四国
             { id: 168, name: "若桜鬼ヶ城", category: "続100名城", region: "中国・四国", pref: "鳥取県", lat: 35.3411, lng: 134.3986 },
             { id: 169, name: "米子城", category: "続100名城", region: "中国・四国", pref: "鳥取県", lat: 35.4244, lng: 133.3267 },
             { id: 170, name: "浜田城", category: "続100名城", region: "中国・四国", pref: "島根県", lat: 34.9039, lng: 132.0789 },
             { id: 171, name: "備中高松城", category: "続100名城", region: "中国・四国", pref: "岡山県", lat: 34.6978, lng: 133.8208 },
-            { id: 172, name: "新見陣屋", category: "続100名城", region: "中国・四国", pref: "岡山県", lat: 34.9819, lng: 133.4686 },
-            { id: 173, name: "三原城", category: "続100名城", region: "中国・四国", pref: "広島県", lat: 34.4006, lng: 133.0850 },
-            { id: 174, name: "新尾道城(新高山城)", category: "続100名城", region: "中国・四国", pref: "広島県", lat: 34.4375, lng: 132.9917 },
-            { id: 175, name: "大内氏館・高嶺城", category: "続100名城", region: "中国・四国", pref: "山口県", lat: 34.1869, lng: 131.4725 },
-            { id: 176, name: "勝山城", category: "続100名城", region: "中国・四国", pref: "山口県", lat: 34.0203, lng: 130.9858 },
-            { id: 177, name: "勝瑞城", category: "続100名城", region: "中国・四国", pref: "徳島県", lat: 34.1350, lng: 134.5422 },
-            { id: 178, name: "一宮城", category: "続100名城", region: "中国・四国", pref: "徳島県", lat: 34.0381, lng: 134.4533 },
-            { id: 179, name: "引田城", category: "続100名城", region: "中国・四国", pref: "香川県", lat: 34.2289, lng: 134.4092 },
-            { id: 180, name: "能島城", category: "続100名城", region: "中国・四国", pref: "愛媛県", lat: 34.1569, lng: 133.0825 },
-            { id: 181, name: "河後森城", category: "続100名城", region: "中国・四国", pref: "愛媛県", lat: 33.2661, lng: 132.6567 },
-            { id: 182, name: "岡豊城", category: "続100名城", region: "中国・四国", pref: "高知県", lat: 33.5969, lng: 133.6406 },
+            { id: 172, name: "三原城", category: "続100名城", region: "中国・四国", pref: "広島県", lat: 34.4006, lng: 133.0850 },
+            { id: 173, name: "新高山城", category: "続100名城", region: "中国・四国", pref: "広島県", lat: 34.4375, lng: 132.9917 },
+            { id: 174, name: "大内氏館・高嶺城", category: "続100名城", region: "中国・四国", pref: "山口県", lat: 34.1869, lng: 131.4725 },
+            { id: 175, name: "勝瑞城", category: "続100名城", region: "中国・四国", pref: "徳島県", lat: 34.1350, lng: 134.5422 },
+            { id: 176, name: "一宮城", category: "続100名城", region: "中国・四国", pref: "徳島県", lat: 34.0381, lng: 134.4533 },
+            { id: 177, name: "引田城", category: "続100名城", region: "中国・四国", pref: "香川県", lat: 34.2289, lng: 134.4092 },
+            { id: 178, name: "能島城", category: "続100名城", region: "中国・四国", pref: "愛媛県", lat: 34.1569, lng: 133.0825 },
+            { id: 179, name: "河後森城", category: "続100名城", region: "中国・四国", pref: "愛媛県", lat: 33.2661, lng: 132.6567 },
+            { id: 180, name: "岡豊城", category: "続100名城", region: "中国・四国", pref: "高知県", lat: 33.5969, lng: 133.6406 },
 
             // 九州・沖縄
-            { id: 183, name: "小倉城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.8836, lng: 130.8753 },
-            { id: 184, name: "水城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.5186, lng: 130.4908 },
-            { id: 185, name: "久留米城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.3236, lng: 130.5058 },
-            { id: 186, name: "基肄城", category: "続100名城", region: "九州・沖縄", pref: "佐賀県", lat: 33.4439, lng: 130.5189 },
-            { id: 187, name: "唐津城", category: "続100名城", region: "九州・沖縄", pref: "佐賀県", lat: 33.4544, lng: 129.9806 },
-            { id: 188, name: "金田城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 34.2981, lng: 129.2783 },
-            { id: 189, name: "福江城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 32.6953, lng: 128.8436 },
-            { id: 190, name: "原城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 32.6281, lng: 130.3881 },
-            { id: 191, name: "鞠智城", category: "続100名城", region: "九州・沖縄", pref: "熊本県", lat: 33.0039, lng: 130.7936 },
-            { id: 192, name: "八代城", category: "続100名城", region: "九州・沖縄", pref: "熊本県", lat: 32.5086, lng: 130.5989 },
-            { id: 193, name: "中津城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.6067, lng: 131.1856 },
-            { id: 194, name: "角牟礼城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.2806, lng: 131.1492 },
-            { id: 195, name: "臼杵城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.1228, lng: 131.8089 },
-            { id: 196, name: "延岡城", category: "続100名城", region: "九州・沖縄", pref: "宮崎県", lat: 32.5808, lng: 131.6625 },
-            { id: 197, name: "佐土原城", category: "続100名城", region: "九州・沖縄", pref: "宮崎県", lat: 32.0469, lng: 131.4367 },
-            { id: 198, name: "志布志城", category: "続100名城", region: "九州・沖縄", pref: "鹿児島県", lat: 31.4789, lng: 131.1042 },
-            { id: 199, name: "知覧城", category: "続100名城", region: "九州・沖縄", pref: "鹿児島県", lat: 31.3653, lng: 130.4392 },
-            { id: 200, name: "座喜味城", category: "続100名城", region: "九州・沖縄", pref: "沖縄県", lat: 26.4081, lng: 127.7425 }
+            { id: 181, name: "小倉城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.8836, lng: 130.8753 },
+            { id: 182, name: "水城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.5186, lng: 130.4908 },
+            { id: 183, name: "久留米城", category: "続100名城", region: "九州・沖縄", pref: "福岡県", lat: 33.3236, lng: 130.5058 },
+            { id: 184, name: "基肄城", category: "続100名城", region: "九州・沖縄", pref: "佐賀県", lat: 33.4439, lng: 130.5189 },
+            { id: 185, name: "唐津城", category: "続100名城", region: "九州・沖縄", pref: "佐賀県", lat: 33.4544, lng: 129.9806 },
+            { id: 186, name: "金田城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 34.2981, lng: 129.2783 },
+            { id: 187, name: "福江城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 32.6953, lng: 128.8436 },
+            { id: 188, name: "原城", category: "続100名城", region: "九州・沖縄", pref: "長崎県", lat: 32.6281, lng: 130.3881 },
+            { id: 189, name: "鞠智城", category: "続100名城", region: "九州・沖縄", pref: "熊本県", lat: 33.0039, lng: 130.7936 },
+            { id: 190, name: "八代城", category: "続100名城", region: "九州・沖縄", pref: "熊本県", lat: 32.5086, lng: 130.5989 },
+            { id: 191, name: "中津城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.6067, lng: 131.1856 },
+            { id: 192, name: "角牟礼城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.2806, lng: 131.1492 },
+            { id: 193, name: "臼杵城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 33.1228, lng: 131.8089 },
+            { id: 194, name: "佐伯城", category: "続100名城", region: "九州・沖縄", pref: "大分県", lat: 32.9603, lng: 131.8958 },
+            { id: 195, name: "延岡城", category: "続100名城", region: "九州・沖縄", pref: "宮崎県", lat: 32.5808, lng: 131.6625 },
+            { id: 196, name: "佐土原城", category: "続100名城", region: "九州・沖縄", pref: "宮崎県", lat: 32.0469, lng: 131.4367 },
+            { id: 197, name: "志布志城", category: "続100名城", region: "九州・沖縄", pref: "鹿児島県", lat: 31.4789, lng: 131.1042 },
+            { id: 198, name: "知覧城", category: "続100名城", region: "九州・沖縄", pref: "鹿児島県", lat: 31.3653, lng: 130.4392 },
+            { id: 199, name: "座喜味城", category: "続100名城", region: "九州・沖縄", pref: "沖縄県", lat: 26.4081, lng: 127.7425 },
+            { id: 200, name: "勝連城", category: "続100名城", region: "九州・沖縄", pref: "沖縄県", lat: 26.3308, lng: 127.8792 }
         ];
 
         const compressImg = (file, maxPx = 800) => {
@@ -635,7 +612,7 @@
 
                             {/* TAB 1: LIST & SEARCH */}
                             {activeTab === "LIST" && (
-                                <div className="flex-1 flex flex-col h-full overflow-hidden">
+                                <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
                                     
                                     {/* Search & Filters */}
                                     {}
@@ -695,7 +672,7 @@
                                     </div>
 
                                     {/* Castle Cards List */}
-                                    <div className="flex-1 overflow-y-auto p-3 space-y-2">
+                                    <div className="flex-1 overflow-y-auto p-3 space-y-2 pb-12">
                                         {filteredCastles.length === 0 ? (
                                             <div className="text-center py-10 text-gray-500 text-xs">
                                                 条件に合う城郭が見つかりませんでした。
@@ -906,7 +883,7 @@
 
             return (
                 <div className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-xs flex items-center justify-center p-2">
-        <div className="bg-[#f7f5f0] w-full max-w-[360px] rounded-xl shadow-2xl border-2 border-[#c5a059] overflow-hidden flex flex-col max-h-[85dvh] animate-fade-in">
+        <div className="bg-[#f7f5f0] w-full max-w-[360px] rounded-xl shadow-2xl border-2 border-[#c5a059] overflow-hidden flex flex-col max-h-[85dvh]">
                         
                         {/* Modal Header */}
                         <div className="bg-[#1b2a47] text-white p-4 flex items-start justify-between border-b-2 border-[#c5a059]">
@@ -928,7 +905,7 @@
                         </div>
 
                         {/* Modal Body */}
-                        <form onSubmit={handleSubmit} className="p-4 overflow-y-auto space-y-4 text-xs">
+                        <form onSubmit={handleSubmit} className="p-4 modal-body-scroll space-y-3 text-xs">
                             
                             {/* Visit Toggle Checkbox */}
                             <div className="bg-white p-3 rounded-lg border border-gray-200 flex items-center justify-between">
